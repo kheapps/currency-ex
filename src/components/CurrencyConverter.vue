@@ -47,5 +47,9 @@ export default {
   box-shadow: 3px 5px 7px rgb(225, 225, 225), -3px -3px 5px rgb(225, 225, 225);
   border-radius: 25px;
   margin: 100px auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
