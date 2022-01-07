@@ -7,7 +7,7 @@
       @blur="unFocusInput"
       v-model="searchedText"
     />
-    <div class="list-filtered" v-show="isFocused">
+    <div class="list-filtered" v-show="true">
       <CurrencyOption
         v-for="(c, i) in filteredCurrencies"
         :key="i"
