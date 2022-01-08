@@ -71,7 +71,11 @@ export default {
       type: String,
       default: "Label",
     },
-    defaultCurrency: {
+    // defaultCurrency: {
+    //   type: Object,
+    //   required: true,
+    // },
+    selectedCurrency: {
       type: Object,
       required: true,
     },
@@ -81,7 +85,7 @@ export default {
     return {
       isFocused: false,
       searchedText: "",
-      selectedCurrency: this.defaultCurrency,
+      //   selectedCurrency: this.defaultCurrency,
     };
   },
   methods: {
@@ -96,7 +100,7 @@ export default {
     selectCurrency(currency) {
       this.isFocused = false;
       this.searchedText = currency.code.toUpperCase();
-      this.selectedCurrency = currency;
+      //   this.selectedCurrency = currency;
       this.$emit("select-currency", this.label.toLowerCase(), currency);
     },
     selectFirstResult() {
@@ -127,8 +131,13 @@ export default {
       return this.selectedCurrency ? this.selectedCurrency.code : "eur";
     },
   },
+  watch: {
+    selectedCurrency(currency) {
+      this.searchedText = currency.code.toUpperCase();
+    },
+  },
   mounted() {
-    this.searchedText = this.defaultCurrency.code.toUpperCase();
+    this.searchedText = this.selectedCurrency.code.toUpperCase();
   },
 };
 </script>

@@ -2,10 +2,10 @@
   <div class="converter-card">
     <CurrencySelector
       label="From"
-      :defaultCurrency="selectedCurrencies.from"
+      :selected-currency="selectedCurrencies.from"
       @select-currency="onSelectCurrency"
     />
-    <div class="reverse-btn">
+    <div class="reverse-btn" @click="reverseCurrencies">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -22,7 +22,7 @@
     </div>
     <CurrencySelector
       label="To"
-      :defaultCurrency="selectedCurrencies.to"
+      :selected-currency="selectedCurrencies.to"
       @select-currency="onSelectCurrency"
     />
   </div>
@@ -46,6 +46,11 @@ export default {
   methods: {
     onSelectCurrency(key, currency) {
       this.selectedCurrencies[key] = currency;
+    },
+    reverseCurrencies() {
+      const tmp = this.selectedCurrencies.from;
+      this.selectedCurrencies.from = this.selectedCurrencies.to;
+      this.selectedCurrencies.to = tmp;
     },
   },
 };
