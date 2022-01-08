@@ -3,7 +3,6 @@
     <CurrencySelector
       label="From"
       :selected-currency="selectedCurrencies.from"
-      @select-currency="onSelectCurrency"
     />
     <div class="reverse-btn" @click="reverseCurrencies">
       <svg
@@ -20,16 +19,12 @@
         />
       </svg>
     </div>
-    <CurrencySelector
-      label="To"
-      :selected-currency="selectedCurrencies.to"
-      @select-currency="onSelectCurrency"
-    />
+    <CurrencySelector label="To" :selected-currency="selectedCurrencies.to" />
   </div>
 </template>
 
 <script>
-import CurrencySelector from "./CurrencySelector.vue";
+import CurrencySelector from "./CurrencyEntry/CurrencySelector.vue";
 
 export default {
   components: {
@@ -52,6 +47,11 @@ export default {
       this.selectedCurrencies.from = this.selectedCurrencies.to;
       this.selectedCurrencies.to = tmp;
     },
+  },
+  provide() {
+    return {
+      onSelectCurrency: this.onSelectCurrency,
+    };
   },
 };
 </script>

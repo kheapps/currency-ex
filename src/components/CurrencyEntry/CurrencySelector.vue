@@ -71,16 +71,12 @@ export default {
       type: String,
       default: "Label",
     },
-    // defaultCurrency: {
-    //   type: Object,
-    //   required: true,
-    // },
     selectedCurrency: {
       type: Object,
       required: true,
     },
   },
-  inject: ["currencies"],
+  inject: ["currencies", "onSelectCurrency"],
   data() {
     return {
       isFocused: false,
@@ -100,8 +96,7 @@ export default {
     selectCurrency(currency) {
       this.isFocused = false;
       this.searchedText = currency.code.toUpperCase();
-      //   this.selectedCurrency = currency;
-      this.$emit("select-currency", this.label.toLowerCase(), currency);
+      this.onSelectCurrency(this.label.toLowerCase(), currency);
     },
     selectFirstResult() {
       if (this.filteredCurrencies.length > 0)
