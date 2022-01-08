@@ -21,7 +21,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/currency-flags.min.css";
 
 .currency-option-item {
   position: relative;

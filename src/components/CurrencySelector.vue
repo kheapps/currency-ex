@@ -1,12 +1,45 @@
 <template>
   <div class="currency-select">
+    <div
+      :class="'currency-flag currency-flag-' + selectedCurrency.code"
+      v-show="!isFocused"
+    ></div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="16"
+      fill="currentColor"
+      class="bi bi-chevron-down"
+      viewBox="0 0 16 16"
+      v-show="!isFocused"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+      />
+    </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="16"
+      fill="currentColor"
+      class="bi bi-x close-btn"
+      viewBox="0 0 16 16"
+      v-show="isFocused"
+    >
+      <path
+        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+      />
+    </svg>
     <input
-      class="currency-filter-input"
       type="text"
       @focus="onEnterInput"
       @blur="onExitInput"
       @keyup="updateList"
+      @keydown.enter="selectFirstCurrency"
       v-model="searchedText"
+      placeholder="Search"
+      ref="searchInput"
     />
     <div
       id="testList"
@@ -37,11 +70,16 @@ export default {
       type: Array,
       required: true,
     },
+    defaultCurrency: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
       isFocused: false,
       searchedText: "",
+      selectedCurrency: this.defaultCurrency,
     };
   },
   methods: {
@@ -51,17 +89,22 @@ export default {
     },
     onExitInput() {
       this.isFocused = false;
+      this.searchedText = this.selectedCurrency.code.toUpperCase();
     },
     selectCurrency(currency) {
       this.isFocused = false;
       this.searchedText = currency.code.toUpperCase();
+      this.selectedCurrency = currency;
     },
-    updateList() {},
+    selectFirstCurrency() {
+      if (this.filteredCurrencies.length > 0)
+        this.selectCurrency(this.filteredCurrencies[0]);
+      this.$refs.searchInput.blur();
+    },
   },
   computed: {
     filteredCurrencies() {
       // reset the list position to top
-      console.log("filterd currencie computed property");
       const list = this.$refs.currenciesList;
       if (list) list.scrollTop = 0;
 
@@ -77,6 +120,12 @@ export default {
     noElementFound() {
       return this.filteredCurrencies.length == 0;
     },
+    selectedCurrencyFlag() {
+      return this.selectedCurrency ? this.selectedCurrency.code : "eur";
+    },
+  },
+  mounted() {
+    this.searchedText = this.defaultCurrency.code.toUpperCase();
   },
 };
 </script>
@@ -85,7 +134,7 @@ export default {
 .currency-select {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 15px auto;
   padding: 0;
   align-items: center;
@@ -115,7 +164,9 @@ export default {
   display: none;
 }
 
-.currency-filter-input {
+input {
+  z-index: 2;
+  background: transparent;
   width: 150px;
   height: 50px;
   box-sizing: border-box;
@@ -125,10 +176,33 @@ export default {
   border-radius: 10px;
   border: 1px solid rgb(235, 235, 235);
   box-shadow: 1px 1px 3px rgb(225, 225, 225), -1px -1px 3px rgb(225, 225, 225);
+  cursor: pointer;
+}
+
+input:focus {
+  cursor: text;
 }
 
 p {
   font-size: 0.7em;
   color: grey;
+}
+
+.currency-flag {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: 15px;
+}
+
+svg {
+  position: absolute;
+  right: 10px;
+  top: 25%;
+  height: 50%;
+}
+
+.close-btn {
+  z-index: 3;
+  cursor: pointer;
 }
 </style>

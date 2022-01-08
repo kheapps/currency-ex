@@ -1,6 +1,6 @@
 <template>
   <div class="converter-card">
-    <CurrencySelector :currencies="currencies" />
+    <CurrencySelector :currencies="currencies" :defaultCurrency="default1" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
     return {
       currencies: [],
       select: null,
+      default1: { code: "eur", name: "Euro" },
     };
   },
   created() {

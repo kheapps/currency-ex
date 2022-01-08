@@ -15,6 +15,8 @@ export default {
 </script>
 
 <style>
+@import "./assets/currency-flags.min.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
