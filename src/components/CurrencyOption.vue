@@ -1,7 +1,7 @@
 <template>
   <div class="currency-option-item">
-    <h1>{{ currency.code.toUpperCase() }}</h1>
     <div :class="'currency-flag currency-flag-' + currency.code"></div>
+    <h1>{{ currency.code.toUpperCase() }}</h1>
     <h3 :title="currency.name">{{ fullName }}</h3>
   </div>
 </template>
@@ -21,7 +21,6 @@ export default {
 </script>
 
 <style scoped>
-
 .currency-option-item {
   position: relative;
   height: 50px;

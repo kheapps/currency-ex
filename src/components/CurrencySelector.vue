@@ -4,6 +4,7 @@
       :class="'currency-flag currency-flag-' + selectedCurrency.code"
       v-show="!isFocused"
     ></div>
+    <div class="label">{{ label }}</div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -36,7 +37,7 @@
       @focus="onEnterInput"
       @blur="onExitInput"
       @keyup="updateList"
-      @keydown.enter="selectFirstCurrency"
+      @keydown.enter="selectFirstResult"
       v-model="searchedText"
       placeholder="Search"
       ref="searchInput"
@@ -66,6 +67,10 @@ export default {
     CurrencyOption,
   },
   props: {
+    label: {
+      type: String,
+      default: "Label",
+    },
     defaultCurrency: {
       type: Object,
       required: true,
@@ -92,8 +97,9 @@ export default {
       this.isFocused = false;
       this.searchedText = currency.code.toUpperCase();
       this.selectedCurrency = currency;
+      this.$emit("select-currency", this.label.toLowerCase(), currency);
     },
-    selectFirstCurrency() {
+    selectFirstResult() {
       if (this.filteredCurrencies.length > 0)
         this.selectCurrency(this.filteredCurrencies[0]);
       this.$refs.searchInput.blur();
@@ -132,7 +138,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
-  margin: 15px auto;
+  margin: 15px;
   padding: 0;
   align-items: center;
 }
@@ -201,5 +207,13 @@ svg {
 .close-btn {
   z-index: 3;
   cursor: pointer;
+}
+
+.label {
+  position: absolute;
+  top: -23px;
+  left: 5px;
+  font-size: 0.9em;
+  font-weight: 700;
 }
 </style>
