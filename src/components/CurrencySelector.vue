@@ -3,11 +3,17 @@
     <input
       class="currency-filter-input"
       type="text"
-      @focus="onFocusedInput"
-      @blur="unFocusInput"
+      @focus="onEnterInput"
+      @blur="onExitInput"
+      @keyup="updateList"
       v-model="searchedText"
     />
-    <div class="list-filtered" v-show="true">
+    <div
+      id="testList"
+      class="list-filtered"
+      v-show="isFocused"
+      ref="currenciesList"
+    >
       <CurrencyOption
         v-for="(c, i) in filteredCurrencies"
         :key="i"
@@ -39,21 +45,27 @@ export default {
     };
   },
   methods: {
-    onFocusedInput() {
+    onEnterInput() {
       this.isFocused = true;
       this.searchedText = "";
     },
-    unFocusInput() {
+    onExitInput() {
       this.isFocused = false;
     },
     selectCurrency(currency) {
-      this.unFocusInput();
+      this.isFocused = false;
       this.searchedText = currency.code.toUpperCase();
-      console.log(currency);
     },
+    updateList() {},
   },
   computed: {
     filteredCurrencies() {
+      // reset the list position to top
+      console.log("filterd currencie computed property");
+      const list = this.$refs.currenciesList;
+      if (list) list.scrollTop = 0;
+
+      // update list content with serched text
       return this.currencies.filter(
         (currency) =>
           currency.code

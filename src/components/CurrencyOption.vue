@@ -1,6 +1,6 @@
 <template>
   <div class="currency-option-item">
-    <!-- <h1>{{ currency.code.toUpperCase() }}</h1> -->
+    <h1>{{ currency.code.toUpperCase() }}</h1>
     <div :class="'currency-flag currency-flag-' + currency.code"></div>
     <h3 :title="currency.name">{{ fullName }}</h3>
   </div>
@@ -24,6 +24,7 @@ export default {
 @import "../assets/currency-flags.min.css";
 
 .currency-option-item {
+  position: relative;
   height: 50px;
   padding: 5px 0;
   box-sizing: border-box;
@@ -61,5 +62,11 @@ h3 {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: clip;
+}
+
+.currency-flag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
