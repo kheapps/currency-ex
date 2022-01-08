@@ -1,11 +1,10 @@
 <template>
   <div class="converter-card">
-    <CurrencySelector :currencies="currencies" :defaultCurrency="default1" />
+    <CurrencySelector :defaultCurrency="default1" />
   </div>
 </template>
 
 <script>
-import axios from "axios";
 
 import CurrencySelector from "./CurrencySelector.vue";
 
@@ -15,27 +14,8 @@ export default {
   },
   data() {
     return {
-      currencies: [],
-      select: null,
       default1: { code: "eur", name: "Euro" },
     };
-  },
-  created() {
-    axios({
-      method: "get",
-      url: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json",
-      responseType: "json",
-    }).then((response) => this.initCurrencies(response.data));
-  },
-  methods: {
-    initCurrencies(data) {
-      for (var e in data) {
-        this.currencies.push({
-          code: e,
-          name: data[e],
-        });
-      }
-    },
   },
 };
 </script>

@@ -66,15 +66,12 @@ export default {
     CurrencyOption,
   },
   props: {
-    currencies: {
-      type: Array,
-      required: true,
-    },
     defaultCurrency: {
       type: Object,
       required: true,
     },
   },
+  inject: ["currencies"],
   data() {
     return {
       isFocused: false,
