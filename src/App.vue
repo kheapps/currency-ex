@@ -8,6 +8,8 @@ import axios from "axios";
 
 import CurrencyConverter from "./components/CurrencyConverter.vue";
 
+const BASE_URL_API = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/";
+
 export default {
   name: "App",
   data() {
@@ -27,16 +29,36 @@ export default {
         });
       }
     },
+    getAllCurrenciesUrl(date = "latest") {
+      return BASE_URL_API + date + "/currencies.min.json";
+    },
+    getAllCurrenciesFromBaseUrl(base, date = "latest") {
+      return BASE_URL_API + date + "/currencies/" + base + ".json";
+    },
+    getCurrencyFromToUrl(from, to, date = "latest") {
+      return BASE_URL_API + date + "/currencies/" + from + "/" + to + ".json";
+    },
+    async getCurrencyFromTo(from, to, date) {
+      const resp = await axios({
+        method: "get",
+        url: this.getCurrencyFromToUrl(from, to, date),
+        responseType: "json",
+      });
+      console.log(resp);
+      return resp.data;
+    },
   },
   provide() {
     return {
       currencies: this.currencies,
+      getFromBase: this.getAllCurrenciesFromBase,
+      getFromTo: this.getCurrencyFromTo,
     };
   },
   created() {
     axios({
       method: "get",
-      url: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json",
+      url: this.getAllCurrenciesUrl(),
       responseType: "json",
     }).then((response) => this.initCurrencies(response.data));
   },

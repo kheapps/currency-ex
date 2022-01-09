@@ -1,6 +1,6 @@
 <template>
   <div class="currency-entry">
-    <p id="invalid-entry-hint" v-show="isInvalidEntry">
+    <p class="invalid-entry-hint" v-show="isInvalidEntry">
       Please enter a valid amount
     </p>
     <input
@@ -9,7 +9,7 @@
       placeholder="Amount"
       maxlength="10"
       :disabled="disabled"
-      v-model="amount"
+      v-model="amountModel"
       @keyup="validEntry"
     />
     <CurrencySelector :label="label" :selectedCurrency="selectedCurrency" />
@@ -36,16 +36,20 @@ export default {
       type: Object,
       required: true,
     },
+    amount: {
+      type: Number,
+      default: 1.0,
+    },
   },
   data() {
     return {
-      amount: "",
+      amountModel: "",
       isInvalidEntry: false,
     };
   },
   methods: {
     validEntry() {
-      const amountStr = this.amount.replace(",", ".");
+      const amountStr = this.amountModel.replace(",", ".");
       if (amountStr == "" || +amountStr) {
         this.isInvalidEntry = false;
         this.$emit("set-amount", +amountStr);
@@ -53,6 +57,14 @@ export default {
         this.isInvalidEntry = true;
       }
     },
+  },
+  watch: {
+    amount(amountValue) {
+      this.amountModel = amountValue.toFixed(2);
+    },
+  },
+  created() {
+    this.amountModel = this.amount;
   },
 };
 </script>
@@ -92,7 +104,7 @@ input.invalid {
   background: rgb(255, 225, 225);
 }
 
-#invalid-entry-hint {
+.invalid-entry-hint {
   position: absolute;
   bottom: -25px;
   left: 10px;

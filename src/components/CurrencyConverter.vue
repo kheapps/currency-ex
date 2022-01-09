@@ -21,7 +21,12 @@
         />
       </svg>
     </div>
-    <CurrencyEntry label="To" :selected-currency="selectedCurrencies.to" />
+    <CurrencyEntry
+      label="To"
+      :selected-currency="selectedCurrencies.to"
+      :amount="convertedAmount"
+    />
+    <p class="date">{{ currencyFactorFetchedDate }}</p>
   </div>
 </template>
 
@@ -38,42 +43,76 @@ export default {
         from: { code: "eur", name: "Euro" },
         to: { code: "usd", name: "United States dollar" },
       },
+      currencyFactor: 0,
+      amountEntered: 1.0,
+      currencyFactorFetchedDate: Date,
+    };
+  },
+  inject: ["getFromTo"],
+  provide() {
+    return {
+      onSelectCurrency: this.onSelectCurrency,
     };
   },
   methods: {
     onSelectCurrency(key, currency) {
       this.selectedCurrencies[key] = currency;
+      this.getCurrencyFactor();
     },
     reverseCurrencies() {
       const tmp = this.selectedCurrencies.from;
       this.selectedCurrencies.from = this.selectedCurrencies.to;
       this.selectedCurrencies.to = tmp;
+      this.getCurrencyFactor();
+    },
+    async getCurrencyFactor() {
+      const resp = await this.getFromTo(
+        this.selectedCurrencies.from.code,
+        this.selectedCurrencies.to.code
+      );
+      this.currencyFactor = resp[this.selectedCurrencies.to.code];
+      const d = new Date(Date.now());
+      this.currencyFactorFetchedDate = d.toUTCString();
+      console.log(d.toUTCString());
     },
     setAmount(amount) {
-      console.log("set amount : ");
-      console.log(amount);
+      this.amountEntered = amount;
     },
   },
-  provide() {
-    return {
-      onSelectCurrency: this.onSelectCurrency,
-    };
+  computed: {
+    convertedAmount() {
+      return this.currencyFactor * this.amountEntered;
+    },
+  },
+  created() {
+    this.getCurrencyFactor();
   },
 };
 </script>
 
 <style scoped>
 .converter-card {
+  position: relative;
   width: 60%;
+  min-width: 450px;
   height: 250px;
   background: white;
   box-shadow: 3px 5px 7px rgb(225, 225, 225), -3px -3px 5px rgb(225, 225, 225);
   border-radius: 25px;
   margin: 100px auto;
+  box-sizing: border-box;
 
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 1050px) {
+  .converter-card {
+    height: 300px;
+    flex-direction: column;
+  }
 }
 
 .reverse-btn {
@@ -91,5 +130,13 @@ export default {
 .reverse-btn svg {
   height: 100%;
   /* background: coral; */
+}
+
+.date {
+  position: absolute;
+  right: 25px;
+  bottom: 0;
+  height: 20px;
+  font-size: 0.7em;
 }
 </style>
