@@ -69,7 +69,7 @@ export default {
   props: {
     label: {
       type: String,
-      default: "Label",
+      default: "",
     },
     selectedCurrency: {
       type: Object,
@@ -142,9 +142,10 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
-  margin: 15px;
   padding: 0;
   align-items: center;
+  background: white;
+  border-radius: 10px;
 }
 
 .list-filtered {
@@ -188,6 +189,7 @@ input {
 
 input:focus {
   cursor: text;
+  outline: none;
 }
 
 p {
@@ -216,7 +218,7 @@ svg {
 .label {
   position: absolute;
   top: -23px;
-  left: 5px;
+  right: 5px;
   font-size: 0.9em;
   font-weight: 700;
 }

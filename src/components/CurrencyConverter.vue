@@ -1,8 +1,9 @@
 <template>
   <div class="converter-card">
-    <CurrencySelector
+    <CurrencyEntry
       label="From"
       :selected-currency="selectedCurrencies.from"
+      :disabled="false"
     />
     <div class="reverse-btn" @click="reverseCurrencies">
       <svg
@@ -19,16 +20,16 @@
         />
       </svg>
     </div>
-    <CurrencySelector label="To" :selected-currency="selectedCurrencies.to" />
+    <CurrencyEntry label="To" :selected-currency="selectedCurrencies.to" />
   </div>
 </template>
 
 <script>
-import CurrencySelector from "./CurrencyEntry/CurrencySelector.vue";
+import CurrencyEntry from "./CurrencyEntry/CurrencyEntry.vue";
 
 export default {
   components: {
-    CurrencySelector,
+    CurrencyEntry,
   },
   data() {
     return {
