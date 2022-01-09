@@ -45,13 +45,11 @@ export default {
   },
   methods: {
     validEntry() {
-      console.log(this.amount);
       const amountStr = this.amount.replace(",", ".");
-      console.log(+this.amount);
       if (amountStr == "" || +amountStr) {
         this.isInvalidEntry = false;
+        this.$emit("set-amount", +amountStr);
       } else {
-        console.log("not a number " + this.amount);
         this.isInvalidEntry = true;
       }
     },

@@ -4,6 +4,7 @@
       label="From"
       :selected-currency="selectedCurrencies.from"
       :disabled="false"
+      @set-amount="setAmount"
     />
     <div class="reverse-btn" @click="reverseCurrencies">
       <svg
@@ -47,6 +48,10 @@ export default {
       const tmp = this.selectedCurrencies.from;
       this.selectedCurrencies.from = this.selectedCurrencies.to;
       this.selectedCurrencies.to = tmp;
+    },
+    setAmount(amount) {
+      console.log("set amount : ");
+      console.log(amount);
     },
   },
   provide() {
