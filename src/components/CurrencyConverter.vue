@@ -116,7 +116,7 @@ export default {
 }
 
 .reverse-btn {
-  margin: 15px;
+  margin: 25px 30px;
   width: 35px;
   height: 35px;
   border-radius: 35px;
