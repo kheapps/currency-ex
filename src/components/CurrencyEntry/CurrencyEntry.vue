@@ -47,6 +47,11 @@ export default {
       isInvalidEntry: false,
     };
   },
+  watch: {
+    amount(amountValue) {
+      this.amountModel = amountValue.toFixed(2);
+    },
+  },
   methods: {
     validEntry() {
       const amountStr = this.amountModel.replace(",", ".");
@@ -56,11 +61,6 @@ export default {
       } else {
         this.isInvalidEntry = true;
       }
-    },
-  },
-  watch: {
-    amount(amountValue) {
-      this.amountModel = amountValue.toFixed(2);
     },
   },
   created() {

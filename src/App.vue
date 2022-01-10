@@ -14,14 +14,21 @@ const BASE_URL_API = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/";
 
 export default {
   name: "App",
+  components: {
+    CurrencyConverter,
+    CurrencyRates,
+  },
   data() {
     return {
       currencies: [],
     };
   },
-  components: {
-    CurrencyConverter,
-    CurrencyRates,
+  provide() {
+    return {
+      currencies: this.currencies,
+      getFromBase: this.getAllCurrenciesFromBase,
+      getFromTo: this.getCurrencyFromTo,
+    };
   },
   methods: {
     initCurrencies(data) {
@@ -57,13 +64,6 @@ export default {
       });
       return resp.data;
     },
-  },
-  provide() {
-    return {
-      currencies: this.currencies,
-      getFromBase: this.getAllCurrenciesFromBase,
-      getFromTo: this.getCurrencyFromTo,
-    };
   },
   created() {
     axios({

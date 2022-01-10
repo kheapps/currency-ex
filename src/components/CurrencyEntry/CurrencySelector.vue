@@ -76,7 +76,6 @@ export default {
       required: true,
     },
   },
-  inject: ["currencies", "onSelectCurrency"],
   data() {
     return {
       isFocused: false,
@@ -84,26 +83,7 @@ export default {
       //   selectedCurrency: this.defaultCurrency,
     };
   },
-  methods: {
-    onEnterInput() {
-      this.isFocused = true;
-      this.searchedText = "";
-    },
-    onExitInput() {
-      this.isFocused = false;
-      this.searchedText = this.selectedCurrency.code.toUpperCase();
-    },
-    selectCurrency(currency) {
-      this.isFocused = false;
-      this.searchedText = currency.code.toUpperCase();
-      this.onSelectCurrency(this.label.toLowerCase(), currency);
-    },
-    selectFirstResult() {
-      if (this.filteredCurrencies.length > 0)
-        this.selectCurrency(this.filteredCurrencies[0]);
-      this.$refs.searchInput.blur();
-    },
-  },
+  inject: ["currencies", "onSelectCurrency"],
   computed: {
     filteredCurrencies() {
       // reset the list position to top
@@ -129,6 +109,26 @@ export default {
   watch: {
     selectedCurrency(currency) {
       this.searchedText = currency.code.toUpperCase();
+    },
+  },
+  methods: {
+    onEnterInput() {
+      this.isFocused = true;
+      this.searchedText = "";
+    },
+    onExitInput() {
+      this.isFocused = false;
+      this.searchedText = this.selectedCurrency.code.toUpperCase();
+    },
+    selectCurrency(currency) {
+      this.isFocused = false;
+      this.searchedText = currency.code.toUpperCase();
+      this.onSelectCurrency(this.label.toLowerCase(), currency);
+    },
+    selectFirstResult() {
+      if (this.filteredCurrencies.length > 0)
+        this.selectCurrency(this.filteredCurrencies[0]);
+      this.$refs.searchInput.blur();
     },
   },
   mounted() {
