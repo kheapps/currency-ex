@@ -1,12 +1,14 @@
 <template>
   <h1>Currency Converter</h1>
   <CurrencyConverter />
+  <CurrencyRates />
 </template>
 
 <script>
 import axios from "axios";
 
 import CurrencyConverter from "./components/CurrencyConverter.vue";
+import CurrencyRates from "./components/CurrencyRates.vue";
 
 const BASE_URL_API = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/";
 
@@ -19,6 +21,7 @@ export default {
   },
   components: {
     CurrencyConverter,
+    CurrencyRates,
   },
   methods: {
     initCurrencies(data) {
@@ -44,7 +47,14 @@ export default {
         url: this.getCurrencyFromToUrl(from, to, date),
         responseType: "json",
       });
-      console.log(resp);
+      return resp.data;
+    },
+    async getAllCurrenciesFromBase(base, date) {
+      const resp = await axios({
+        method: "get",
+        url: this.getAllCurrenciesFromBaseUrl(base, date),
+        responseType: "json",
+      });
       return resp.data;
     },
   },
