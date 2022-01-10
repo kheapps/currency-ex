@@ -56,6 +56,12 @@ export default {
   },
   methods: {
     onSelectCurrency(key, currency) {
+      if (
+        (key = "from" && this.selectedCurrencies.to.code == currency.code) ||
+        (key = "to" && this.selectedCurrencies.from.code == currency.code)
+      ) {
+        this.reverseCurrencies();
+      }
       this.selectedCurrencies[key] = currency;
       this.getCurrencyFactor();
     },
