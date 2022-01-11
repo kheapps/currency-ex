@@ -62,6 +62,8 @@ export default {
 }
 
 .currency {
+  font-size: 1.1em;
+  font-weight: 500;
   width: 85px;
   display: flex;
   align-items: center;
@@ -72,6 +74,7 @@ export default {
   border-radius: 13px;
   box-sizing: border-box;
   background: rgb(240, 240, 240);
+  color: rgb(55, 105, 105);
 }
 span {
   position: relative;

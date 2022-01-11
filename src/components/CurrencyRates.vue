@@ -1,6 +1,5 @@
 <template>
   <div class="exchange-rates">
-    <h1>Exchange rates</h1>
     <CurrencyEntry
       class="currency-selector"
       label="Base"

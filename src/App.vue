@@ -1,6 +1,7 @@
 <template>
   <h1>Currency Converter</h1>
   <CurrencyConverter />
+  <h1>Exchange rates</h1>
   <CurrencyRates />
   <footer>
     <h3>
@@ -142,6 +143,10 @@ body {
   padding: 0;
 }
 
+h1 {
+  color: rgb(55, 105, 105);
+}
+
 footer {
   width: 100%;
   margin: 0;
@@ -152,7 +157,7 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 3px 3px 30px rgb(55, 105, 105);
+  box-shadow: 3px 3px 30px rgb(225, 225, 225);
   border-radius: 13px;
 }
 

@@ -221,5 +221,6 @@ svg {
   right: 5px;
   font-size: 0.9em;
   font-weight: 700;
+  color: rgb(55, 105, 105);
 }
 </style>
