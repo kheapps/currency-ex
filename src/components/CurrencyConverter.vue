@@ -125,6 +125,8 @@ export default {
   height: 35px;
   border-radius: 35px;
   border: 1px solid rgb(225, 225, 225);
+  background: rgb(55, 105, 105);
+  color: white;
 }
 
 .reverse-btn:hover {

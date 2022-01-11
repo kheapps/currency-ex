@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 .currency-selector {
-  margin: 100px 0;
+  margin: 50px 0;
 }
 
 .rates-list {
