@@ -1,24 +1,4 @@
-# currency-ex
+### Simple currency exchanger web application
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Data from this [API](https://github.com/fawazahmed0/currency-api#readme)  
+Currencies flags from [there](https://github.com/transferwise/currency-flags)
