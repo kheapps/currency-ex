@@ -54,6 +54,11 @@ export default {
       onSelectCurrency: this.onSelectCurrency,
     };
   },
+  computed: {
+    convertedAmount() {
+      return this.currencyFactor * this.amountEntered;
+    },
+  },
   methods: {
     onSelectCurrency(key, currency) {
       if (
@@ -72,22 +77,15 @@ export default {
       this.getCurrencyFactor();
     },
     async getCurrencyFactor() {
-      const resp = await this.getFromTo(
+      const data = await this.getFromTo(
         this.selectedCurrencies.from.code,
         this.selectedCurrencies.to.code
       );
-      this.currencyFactor = resp[this.selectedCurrencies.to.code];
-      const d = new Date(Date.now());
-      this.currencyFactorFetchedDate = d.toUTCString();
-      console.log(d.toUTCString());
+      this.currencyFactor = data.factor;
+      this.currencyFactorFetchedDate = data.date;
     },
     setAmount(amount) {
       this.amountEntered = amount;
-    },
-  },
-  computed: {
-    convertedAmount() {
-      return this.currencyFactor * this.amountEntered;
     },
   },
   created() {

@@ -7,7 +7,6 @@
       :class="{ invalid: isInvalidEntry }"
       type="text"
       placeholder="Amount"
-      maxlength="10"
       :disabled="disabled"
       v-model="amountModel"
       @keyup="validEntry"
@@ -49,7 +48,7 @@ export default {
   },
   watch: {
     amount(amountValue) {
-      this.amountModel = amountValue.toFixed(2);
+      this.amountModel = amountValue;
     },
   },
   methods: {
@@ -83,6 +82,7 @@ input {
   margin: 0;
   margin-right: -25px;
   padding: 15px;
+  padding-right: 35px;
   box-sizing: border-box;
   border-radius: 15px 0 0 15px;
   border: none;

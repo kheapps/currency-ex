@@ -54,7 +54,11 @@ export default {
         url: this.getCurrencyFromToUrl(from, to, date),
         responseType: "json",
       });
-      return resp.data;
+      const d = new Date(Date.now());
+      return {
+        factor: resp.data[to],
+        date: d.toUTCString(),
+      };
     },
     async getAllCurrenciesFromBase(base, date) {
       const resp = await axios({
@@ -62,7 +66,16 @@ export default {
         url: this.getAllCurrenciesFromBaseUrl(base, date),
         responseType: "json",
       });
-      return resp.data;
+      const data = resp.data;
+      const rates = [];
+      for (const e in data[base]) {
+        if (e != base) rates.push({ currency: e, value: data[base][e] });
+      }
+      const d = new Date(Date.now());
+      return {
+        rates: rates,
+        date: d.toUTCString(),
+      };
     },
   },
   created() {

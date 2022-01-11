@@ -7,41 +7,43 @@
       :selectedCurrency="selectedCurrency"
       :disabled="true"
     />
+    <div class="rates-list">
+      <ExchangeRateItem v-for="(c, i) in exchangeRates" :key="i" :rate="c" />
+    </div>
   </div>
 </template>
 
 <script>
 import CurrencyEntry from "./CurrencyEntry/CurrencyEntry.vue";
+import ExchangeRateItem from "./ExchangeRates/ExchangeRateItem.vue";
 
 export default {
   components: {
     CurrencyEntry,
+    ExchangeRateItem,
   },
   data() {
     return {
       selectedCurrency: { code: "eur", name: "Euro" },
       exchangeRates: [],
+      ratesFetchedDate: null,
     };
   },
+  inject: ["getFromBase"],
   provide() {
     return {
       onSelectCurrency: this.onSelectCurrency,
     };
   },
-  inject: ["getFromBase"],
   methods: {
     onSelectCurrency(_, currency) {
-      console.log("Currency rates ");
-      console.log(currency);
       this.selectedCurrency = currency;
       this.updateExhangeRates();
     },
     async updateExhangeRates() {
-      const code = this.selectedCurrency.code;
-      const rates = await this.getFromBase(code);
-      for (const e in rates[code]) {
-        if (e != code) this.exchangeRates.push({ [e]: rates[code][e] });
-      }
+      const data = await this.getFromBase(this.selectedCurrency.code);
+      this.ratesFetchedDate = data.date;
+      this.exchangeRates = data.rates;
     },
   },
   created() {
@@ -53,5 +55,12 @@ export default {
 <style scoped>
 .currency-selector {
   margin: 100px 0;
+}
+
+.rates-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 </style>
