@@ -111,7 +111,7 @@ export default {
       };
     },
     goToGithub() {
-      window.open("https://github.com/kheapps");
+      window.open("https://github.com/kheapps/currency-ex");
     },
   },
   created() {
