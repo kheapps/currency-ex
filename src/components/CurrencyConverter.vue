@@ -101,7 +101,7 @@ export default {
 .converter-card {
   position: relative;
   width: 60%;
-  min-width: 450px;
+  min-width: 350px;
   height: 250px;
   background: white;
   box-shadow: 3px 5px 7px rgb(225, 225, 225), -3px -3px 5px rgb(225, 225, 225);
