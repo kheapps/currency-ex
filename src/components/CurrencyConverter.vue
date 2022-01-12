@@ -61,9 +61,12 @@ export default {
   },
   methods: {
     onSelectCurrency(key, currency) {
+      console.log("1");
+      console.log(key);
+      console.log(currency);
       if (
-        (key = "from" && this.selectedCurrencies.to.code == currency.code) ||
-        (key = "to" && this.selectedCurrencies.from.code == currency.code)
+        (key == "from" && this.selectedCurrencies.to.code == currency.code) ||
+        (key == "to" && this.selectedCurrencies.from.code == currency.code)
       ) {
         this.reverseCurrencies();
       }
