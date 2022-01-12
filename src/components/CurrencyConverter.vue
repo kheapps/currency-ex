@@ -6,6 +6,21 @@
       :disabled="false"
       @set-amount="setAmount"
     />
+    <!-- <div class="reverse-btn" @click="reverseCurrencies">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-left-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"
+        />
+      </svg>
+    </div> -->
     <div class="reverse-btn" @click="reverseCurrencies">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -100,13 +115,13 @@ export default {
 <style scoped>
 .converter-card {
   position: relative;
-  width: 60%;
+  width: 850px;
   min-width: 350px;
   height: 250px;
   background: white;
   box-shadow: 3px 5px 7px rgb(225, 225, 225), -3px -3px 5px rgb(225, 225, 225);
   border-radius: 25px;
-  margin: 100px auto;
+  margin: 100px;
   box-sizing: border-box;
 
   display: flex;
@@ -117,7 +132,8 @@ export default {
 
 @media screen and (max-width: 1050px) {
   .converter-card {
-    height: 300px;
+    height: 350px;
+    width: 350px;
     flex-direction: column;
   }
 }

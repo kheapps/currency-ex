@@ -142,6 +142,11 @@ body {
   color: #2c3e50;
   margin-top: 60px;
   padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
