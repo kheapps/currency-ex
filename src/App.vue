@@ -116,6 +116,7 @@ export default {
     },
   },
   created() {
+    document.title = "Currency rates";
     axios({
       method: "get",
       url: this.getAllCurrenciesUrl(),
