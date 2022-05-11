@@ -101,9 +101,6 @@ export default defineComponent({
       };
     },
     onSelectCurrency(key, currency) {
-      console.log("1");
-      console.log(key);
-      console.log(currency);
       if (
         (key == "from" && this.selectedCurrencies.to.code == currency.code) ||
         (key == "to" && this.selectedCurrencies.from.code == currency.code)
@@ -114,9 +111,9 @@ export default defineComponent({
       this.getCurrencyFactor();
     },
     reverseCurrencies() {
-      const tmp = this.selectedCurrencies.from;
+      const from = this.selectedCurrencies.from;
       this.selectedCurrencies.from = this.selectedCurrencies.to;
-      this.selectedCurrencies.to = tmp;
+      this.selectedCurrencies.to = from;
       this.getCurrencyFactor();
     },
     async getCurrencyFactor() {

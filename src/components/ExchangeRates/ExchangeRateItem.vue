@@ -4,7 +4,7 @@
       <div :class="'currency-flag currency-flag-' + rate.currency"></div>
     </div>
     <span>
-      <input class="value" :value="rate.value" disabled />
+      <input class="value" :value="rateValue" disabled />
       <div
         class="click-zone"
         :title="rate.value"
@@ -21,16 +21,26 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  data() {
+    return {
+      copied: false,
+    };
+  },
   props: {
     rate: {
       type: Object,
       required: true,
     },
   },
+  computed: {
+    rateValue() {
+      return this.copied ? "copied !" : this.rate.value;
+    },
+  },
   methods: {
     copyValue() {
-      /** TODO afficher un message à l'utilisateur */
-      console.log("value " + this.rate.value + " copied !");
+      this.copied = true;
+      setTimeout(() => (this.copied = false), 1000);
     },
   },
 });
