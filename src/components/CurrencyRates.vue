@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { defineComponent } from "vue";
 import CurrencyEntry from "./CurrencyEntry/CurrencyEntry.vue";
 import ExchangeRateItem from "./ExchangeRates/ExchangeRateItem.vue";
@@ -29,7 +30,6 @@ export default defineComponent({
       ratesFetchedDate: null,
     };
   },
-  inject: ["getFromBase"],
   provide() {
     return {
       onSelectCurrency: this.onSelectCurrency,
@@ -40,10 +40,34 @@ export default defineComponent({
       this.selectedCurrency = currency;
       this.updateExhangeRates();
     },
+    getAllCurrenciesFromBaseUrl(base, date = "latest") {
+      return (
+        this.$store.getters.baseUrlApi + date + "/currencies/" + base + ".json"
+      );
+    },
     async updateExhangeRates() {
-      const data = await this.getFromBase(this.selectedCurrency.code);
+      const data = await this.getAllCurrenciesFromBase(
+        this.selectedCurrency.code
+      );
       this.ratesFetchedDate = data.date;
       this.exchangeRates = data.rates;
+    },
+    async getAllCurrenciesFromBase(base, date = "latest") {
+      const resp = await axios({
+        method: "get",
+        url: this.getAllCurrenciesFromBaseUrl(base, date),
+        responseType: "json",
+      });
+      const data = resp.data;
+      const rates = [];
+      for (const e in data[base]) {
+        if (e != base) rates.push({ currency: e, value: data[base][e] });
+      }
+      const d = new Date(Date.now());
+      return {
+        rates: rates,
+        date: d.toUTCString(),
+      };
     },
   },
   created() {

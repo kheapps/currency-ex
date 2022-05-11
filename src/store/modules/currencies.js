@@ -21,7 +21,7 @@ export default {
     async initCurrencies(ctx) {
       const resp = await axios({
         method: "get",
-        url: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json",
+        url: ctx.getters.baseUrlApi + "/latest/currencies.min.json",
         responseType: "json",
       });
 

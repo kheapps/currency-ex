@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { defineComponent } from "vue";
 import CurrencyEntry from "./CurrencyEntry/CurrencyEntry.vue";
 
@@ -65,7 +66,6 @@ export default defineComponent({
       isSmallScreen: false,
     };
   },
-  inject: ["getFromTo"],
   provide() {
     return {
       onSelectCurrency: this.onSelectCurrency,
@@ -77,6 +77,29 @@ export default defineComponent({
     },
   },
   methods: {
+    getCurrencyFromToUrl(from, to, date = "latest") {
+      return (
+        this.$store.getters.baseUrlApi +
+        date +
+        "/currencies/" +
+        from +
+        "/" +
+        to +
+        ".json"
+      );
+    },
+    async getCurrencyFromTo(from, to, date) {
+      const resp = await axios({
+        method: "get",
+        url: this.getCurrencyFromToUrl(from, to, date),
+        responseType: "json",
+      });
+      const d = new Date(Date.now());
+      return {
+        factor: resp.data[to],
+        date: d.toUTCString(),
+      };
+    },
     onSelectCurrency(key, currency) {
       console.log("1");
       console.log(key);
@@ -97,7 +120,7 @@ export default defineComponent({
       this.getCurrencyFactor();
     },
     async getCurrencyFactor() {
-      const data = await this.getFromTo(
+      const data = await this.getCurrencyFromTo(
         this.selectedCurrencies.from.code,
         this.selectedCurrencies.to.code
       );
